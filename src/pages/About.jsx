@@ -40,7 +40,7 @@ function About() {
                         </li>
                         <li className='md:flex flex gap-4 '>
                             <MdOutlineEmail className='md:text-3xl' />
-                            Biganana616@gmail.com
+                            py.paoyang@gmail.com
                         </li>
                         <li className='md:flex flex gap-4 '>
                             <MdOutlinePersonPin className='md:text-3xl' />

@@ -28,7 +28,7 @@ function Home() {
                 </ul>
                 <ul className='flex gap-4 items-center '>
                   <li><MdOutlineEmail className='text-sm ' /></li>
-                  <li>Biganana616@gmail.com</li>
+                  <li>py.paoyang@gmail.com</li>
                 </ul>
                 <ul className='flex gap-4 items-center'>
                   <li><FaFacebook className='text-sm ' /></li>
