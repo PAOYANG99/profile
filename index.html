@@ -1,13 +1,564 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>about me</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Pao Yang — Video Editor in Vientiane. Showreel, animation, short film, social content and graphic design portfolio.">
+<meta property="og:title" content="Pao Yang · Video Editor Portfolio">
+<meta property="og:description" content="Showreel, animation, short film, social content and graphic design.">
+<meta property="og:image" content="https://paoyng.com/vid/showreel.jpg">
+<meta property="og:url" content="https://paoyng.com/">
+<meta name="theme-color" content="#121318">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Pao Yang · Video Editor Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Noto+Sans+Lao+Looped:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: an edit suite — sticky timecode bar, a timeline track that doubles as navigation, then "bins" of work. */
+:root{
+  --bg:#F1F2F5; --panel:#FFFFFF; --panel-2:#E6E8EE; --line:#D3D6DE;
+  --fg:#16171C; --muted:#5D6170;
+  --tally:#B86E00;           /* playhead / timecode amber */
+  --on-tally:#FFFFFF;
+  --c-violet:#6B5BD6; --c-teal:#1E8C7C; --c-rose:#C2475D; --c-amber:#B86E00; --c-sky:#2B7BC4;
+  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --body:"IBM Plex Sans Thai","Noto Sans Lao Looped","Leelawadee UI",Tahoma,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"Courier New",monospace;
+  --radius:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121318; --panel:#1B1C23; --panel-2:#24262F; --line:#30323D;
+  --fg:#ECEBE6; --muted:#9A9CAB; --tally:#FFB020; --on-tally:#121318;
+  --c-violet:#9C8CFF; --c-teal:#4FC3B0; --c-rose:#F07A8A; --c-amber:#FFB020; --c-sky:#5DB0FF; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121318; --panel:#1B1C23; --panel-2:#24262F; --line:#30323D;
+  --fg:#ECEBE6; --muted:#9A9CAB; --tally:#FFB020; --on-tally:#121318;
+  --c-violet:#9C8CFF; --c-teal:#4FC3B0; --c-rose:#F07A8A; --c-amber:#FFB020; --c-sky:#5DB0FF; color-scheme:dark}
+:lang(lo) body, body:lang(lo){font-family:"Noto Sans Lao Looped","IBM Plex Sans Thai","Leelawadee UI",sans-serif}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--tally);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1120px;margin-inline:auto;padding-inline:20px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:10px}
+.eyebrow .chip{width:10px;height:10px;border-radius:2px;background:var(--k,var(--tally))}
+h1,h2,h3{text-wrap:balance;margin:0}
+p{margin:0}
+
+/* top bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;gap:16px;min-height:56px}
+.mark{font-family:var(--display);font-weight:900;font-size:22px;letter-spacing:.02em;text-decoration:none}
+.rec{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.rec i{width:8px;height:8px;border-radius:50%;background:var(--c-rose);animation:blink 1.6s steps(2,start) infinite}
+@keyframes blink{to{visibility:hidden}}
+#tc{color:var(--tally);font-weight:700;font-size:14px}
+.spacer{flex:1}
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
+.lang button{all:unset;cursor:pointer;font-size:13px;font-weight:600;padding:4px 12px;border-radius:999px;color:var(--muted)}
+.lang button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+
+/* hero */
+.hero{padding-block:56px 28px;display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:end}
+.hero h1{font-family:var(--display);font-weight:900;font-size:clamp(72px,13vw,168px);line-height:.82;letter-spacing:-.01em;text-transform:uppercase}
+.hero h1 span{display:block}
+.hero h1 .slate{color:transparent;-webkit-text-stroke:2px var(--fg)}
+.role{margin-top:18px;font-size:clamp(18px,2.2vw,22px);font-weight:600}
+.role b{color:var(--tally);font-weight:600}
+.lede{margin-top:10px;color:var(--muted);max-width:52ch}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;font-size:15px;padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:var(--panel)}
+.btn.primary{background:var(--tally);color:var(--on-tally);border-color:transparent}
+.btn:hover{transform:translateY(-1px)}
+
+/* program monitor */
+.monitor{background:#0A0B0E;border-radius:14px;padding:12px;border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(0,0,0,.45)}
+.screen{position:relative;aspect-ratio:16/9;max-width:100%;border-radius:8px;overflow:hidden;display:grid;place-items:center;text-decoration:none;
+  background:
+   radial-gradient(120% 90% at 20% 10%,rgba(156,140,255,.35),transparent 60%),
+   radial-gradient(90% 90% at 90% 100%,rgba(255,176,32,.28),transparent 60%),
+   #15161C}
+.screen .safe{position:absolute;inset:8%;border:1px dashed rgba(255,255,255,.18);border-radius:4px}
+.screen .play{width:68px;height:68px;border-radius:50%;background:#FFB020;display:grid;place-items:center;transition:transform .2s}
+.screen:hover .play{transform:scale(1.08)}
+.screen .play::after{content:"";margin-left:6px;border-left:20px solid #121318;border-top:13px solid transparent;border-bottom:13px solid transparent}
+.screen .lbl{position:absolute;left:14px;bottom:12px;font-family:var(--mono);font-size:11px;color:#FFB020;letter-spacing:.1em}
+.screen .tcr{position:absolute;right:14px;top:12px;font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.7)}
+.monitor .cap{display:flex;justify-content:space-between;gap:12px;padding:10px 4px 2px;color:#C9CAD3;font-size:13px}
+.monitor .cap span:last-child{font-family:var(--mono);color:#8E90A0}
+
+/* timeline nav */
+.timeline{margin-block:12px 8px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 14px 12px;position:relative}
+.ruler{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--muted);padding-left:42px;margin-bottom:8px}
+.track{display:flex;align-items:center;gap:8px}
+.track + .track{margin-top:6px}
+.track .tn{width:34px;flex:none;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.clips{flex:1;display:flex;gap:4px;min-width:0;position:relative}
+.clip{all:unset;cursor:pointer;flex:var(--w,1) 1 0;min-width:0;height:34px;border-radius:5px;background:var(--k);color:#111;padding:0 10px;font-size:12px;font-weight:600;display:flex;align-items:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;opacity:.92}
+.clip:hover,.clip.on{opacity:1;box-shadow:inset 0 0 0 2px var(--fg)}
+.audio .clip{height:20px;background:var(--panel-2);cursor:default;opacity:1;box-shadow:none;background-image:repeating-linear-gradient(90deg,var(--muted) 0 1px,transparent 1px 4px);background-size:100% 60%;background-repeat:no-repeat;background-position:center;opacity:.5}
+#playhead{position:absolute;top:28px;bottom:8px;width:2px;background:var(--tally);left:56px;pointer-events:none;transition:left .12s linear}
+#playhead::before{content:"";position:absolute;top:-6px;left:-5px;border:6px solid transparent;border-top:8px solid var(--tally)}
+
+/* sections */
+section.bin{padding-block:64px 8px;scroll-margin-top:72px}
+.bin-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px 24px;margin-bottom:24px}
+.bin-head h2{font-size:clamp(28px,4vw,40px);font-weight:700;line-height:1.15;margin-top:8px}
+.bin-head p{color:var(--muted);max-width:56ch}
+
+/* featured animation */
+.feature{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px}
+.feature .screen{border-radius:10px}
+.feature h3{font-size:22px;line-height:1.35}
+.steps{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:10px}
+.steps li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:center}
+.steps b{font-family:var(--mono);font-size:12px;width:34px;height:34px;border-radius:8px;display:grid;place-items:center;background:var(--panel-2);color:var(--c-violet)}
+.watch{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-weight:600;color:var(--tally);text-decoration:none}
+.watch:hover{text-decoration:underline}
+
+/* video grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+.vcard{display:flex;flex-direction:column;text-decoration:none;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:transform .2s,border-color .2s}
+.vcard:hover{transform:translateY(-3px);border-color:var(--k)}
+.thumb{position:relative;aspect-ratio:16/10;max-width:100%;background:
+  linear-gradient(135deg,color-mix(in srgb,var(--k) 55%,#0B0C10) 0%,#0B0C10 75%);display:grid;place-items:center}
+.thumb .perf{position:absolute;left:0;right:0;height:10px;background:repeating-linear-gradient(90deg,transparent 0 10px,rgba(255,255,255,.14) 10px 20px,transparent 20px 28px)}
+.thumb .perf.t{top:6px}.thumb .perf.b{bottom:6px}
+.thumb .pb{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center}
+.thumb .pb::after{content:"";margin-left:4px;border-left:14px solid #111;border-top:9px solid transparent;border-bottom:9px solid transparent}
+.thumb .tag{position:absolute;left:10px;bottom:20px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:#fff;background:rgba(0,0,0,.45);padding:2px 7px;border-radius:4px}
+.vbody{padding:14px 16px 16px;display:grid;gap:4px}
+.vbody h3{font-size:17px;line-height:1.4}
+.vbody p{font-size:13px;color:var(--muted)}
+.vbody .go{margin-top:6px;font-size:13px;font-weight:600;color:var(--tally)}
+
+/* gallery */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.filters button{all:unset;cursor:pointer;font-size:13px;font-weight:600;padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--panel)}
+.filters button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.gal button{all:unset;cursor:zoom-in;display:block;border-radius:10px;overflow:hidden;background:var(--panel-2);aspect-ratio:1;position:relative}
+.gal img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
+.gal button:hover img{transform:scale(1.04)}
+.gal .n{position:absolute;left:8px;top:8px;font-family:var(--mono);font-size:10px;color:#fff;background:rgba(0,0,0,.55);padding:2px 6px;border-radius:4px}
+
+button.screen{border:0;padding:0;width:100%;font:inherit;cursor:pointer;color:inherit}
+.screen .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
+button.vcard{font:inherit;color:inherit;text-align:left;padding:0;cursor:pointer;width:100%}
+.thumb.pv{background-size:cover;background-position:center}
+.thumb.pv::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.55))}
+.thumb > *{position:relative}
+.thumb .perf{position:absolute}
+.thumb .tag{position:absolute}
+.vbody .go.ext{color:var(--muted)}
+.pl-stage{display:grid;place-items:center;min-height:0;padding-block:12px}
+.pl-stage video{max-width:min(100%,1000px);max-height:100%;width:auto;border-radius:8px;background:#000;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+button.watch{background:none;border:0;padding:0;font:inherit;cursor:pointer}
+.parts{display:flex;flex-wrap:wrap;gap:6px;width:100%}
+.parts button{all:unset;cursor:pointer;font-family:var(--mono);font-size:12px;padding:5px 10px;border-radius:6px;border:1px solid #3A3C48;color:#ECEBE6}
+.parts button[aria-pressed="true"]{background:#FFB020;color:#121318;border-color:#FFB020}
+/* lightbox */
+[hidden]{display:none!important}
+.lb{position:fixed;inset:0;z-index:50;background:rgba(8,9,12,.94);display:grid;grid-template-rows:auto 1fr auto;padding:calc(env(safe-area-inset-top,0px) + 12px) 16px calc(env(safe-area-inset-bottom,0px) + 14px);color:#ECEBE6}
+.lb-top{display:flex;align-items:center;gap:12px;max-width:1100px;width:100%;margin-inline:auto}
+.lb-top .mono{color:#FFB020;font-weight:700}
+.lb-close{all:unset;cursor:pointer;margin-left:auto;font-size:14px;font-weight:600;padding:8px 14px;border:1px solid #3A3C48;border-radius:999px}
+.lb-stage{position:relative;display:grid;place-items:center;min-height:0;padding-block:12px}
+.lb-stage img{max-height:100%;max-width:min(100%,900px);object-fit:contain;border-radius:6px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.nav{all:unset;cursor:pointer;position:absolute;top:50%;translate:0 -50%;width:52px;height:52px;border-radius:50%;background:#FFB020;color:#121318;display:grid;place-items:center;font-size:20px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.nav.prev{left:4px}.nav.next{right:4px}
+.lb-cap{max-width:1100px;width:100%;margin-inline:auto;display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline}
+.lb-cap b{font-size:17px}
+.lb-cap span{color:#A6A8B6;font-size:14px}
+
+/* about */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;min-width:0}
+.panel h3{font-size:18px;margin-bottom:12px}
+dl.facts{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;margin:0}
+dl.facts dt{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+dl.facts dd{margin:0;font-weight:500}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.tools span{font-size:13px;font-weight:600;padding:6px 12px;border-radius:6px;background:var(--panel-2)}
+.tools span.main{background:var(--tally);color:var(--on-tally)}
+.phases{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.phase{border-top:3px solid var(--k);padding-top:10px;min-width:0}
+.phase h4{margin:0 0 6px;font-size:15px}
+.phase ul{margin:0;padding-left:18px;color:var(--muted);font-size:14px;display:grid;gap:4px}
+.langs{display:grid;gap:8px}
+.lv{display:grid;grid-template-columns:90px 1fr auto;gap:12px;align-items:center;font-size:14px}
+.meter{height:6px;border-radius:3px;background:var(--panel-2);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--c-teal)}
+
+/* contact */
+.contact{margin-block:72px 40px;background:#0A0B0E;color:#ECEBE6;border-radius:18px;padding:36px 28px;display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:center}
+.contact h2{font-family:var(--display);font-weight:900;font-size:clamp(48px,8vw,96px);line-height:.88;text-transform:uppercase}
+.contact h2 em{font-style:normal;color:#FFB020}
+.contact .lines{display:grid;gap:10px}
+.row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#17181F;border:1px solid #2A2C36;border-radius:10px;padding:12px 14px}
+.row small{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:#8E90A0;text-transform:uppercase;width:72px}
+.row strong{font-weight:600;user-select:all;overflow-wrap:anywhere;min-width:0;flex:1}
+.copy{all:unset;cursor:pointer;font-size:12px;font-weight:600;padding:5px 10px;border-radius:6px;background:#2A2C36}
+.contact .btn{background:#FFB020;color:#121318;border:0;justify-content:center}
+footer{padding-block:0 40px;color:var(--muted);font-size:13px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
+
+@media (max-width:860px){
+  .hero,.feature,.about,.contact{grid-template-columns:1fr}
+  .phases{grid-template-columns:1fr}
+  .hero{padding-block:36px 20px}
+}
+@media (max-width:560px){
+  .rec{display:none}
+  .clip{font-size:0;padding:0}
+  .ruler{padding-left:40px}
+  .nav{width:44px;height:44px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<header class="bar">
+  <div class="wrap">
+    <a class="mark" href="#top">PY</a>
+    <span class="rec"><i></i>REC</span>
+    <span id="tc" class="mono" aria-label="timecode">00:00:00:00</span>
+    <span class="spacer"></span>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="th" aria-pressed="true">ไทย</button>
+      <button type="button" data-lang="lo" aria-pressed="false">ລາວ</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="top">
+  <section class="hero">
+    <div>
+      <div class="eyebrow"><span class="chip"></span><span data-t="eyebrow"></span></div>
+      <h1 style="margin-top:14px"><span>Pao</span><span class="slate">Yang</span></h1>
+      <p class="role">Video Editor <b>·</b> Motion <b>·</b> Content</p>
+      <p class="lede" data-t="lede"></p>
+      <div class="ctas">
+        <a class="btn primary" href="#work" data-t="ctaWork"></a>
+        <a class="btn" href="#contact" data-t="ctaContact"></a>
+      </div>
+    </div>
+    <div class="monitor">
+      <button class="screen" id="reel" type="button" data-play="showreel" data-title="Showreel">
+        <img class="poster" src="vid/showreel.jpg" alt=""><span class="safe"></span><span class="tcr">PGM · 25 fps</span><span class="play" aria-hidden="true"></span><span class="lbl">SHOWREEL</span>
+      </button>
+      <div class="cap"><span data-t="reelCap"></span><span>00:00:20:03</span></div>
+    </div>
+  </section>
+
+  <nav class="timeline" aria-label="Sections">
+    <div class="ruler"><span>00:00</span><span>00:30</span><span>01:00</span><span>01:30</span><span>02:00</span><span>02:30</span></div>
+    <div class="track"><span class="tn">V1</span><div class="clips" id="v1"></div></div>
+    <div class="track audio" aria-hidden="true"><span class="tn">A1</span><div class="clips"><span class="clip" style="--w:3"></span><span class="clip" style="--w:2"></span><span class="clip" style="--w:4"></span></div></div>
+    <span id="playhead" aria-hidden="true"></span>
+  </nav>
+
+  <section class="bin" id="work">
+    <div class="bin-head">
+      <div><div class="eyebrow" style="--k:var(--c-violet)"><span class="chip"></span>Senior project · 2025</div><h2 data-t="animH"></h2></div>
+      <p data-t="animP"></p>
+    </div>
+    <div class="feature">
+      <button class="screen" type="button" data-play="anim" data-title="ບຸນນະມັດສະການພຣະທາດສີໂຄດຕະບອງ">
+        <img class="poster" src="vid/anim.jpg" alt=""><span class="safe"></span><span class="tcr">FRAME BY FRAME · 07:48</span><span class="play" aria-hidden="true"></span><span class="lbl">ANIMATION · 2025</span>
+      </button>
+      <div>
+        <h3>ບຸນນະມັດສະການພຣະທາດສີໂຄດຕະບອງ</h3>
+        <ol class="steps" id="steps"></ol>
+        <button class="watch" type="button" data-play="anim" data-title="ບຸນນະມັດສະການພຣະທາດສີໂຄດຕະບອງ" data-t="play"></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="bin" id="film">
+    <div class="bin-head">
+      <div><div class="eyebrow" style="--k:var(--c-rose)"><span class="chip"></span>Short film · 2023</div><h2 data-t="filmH"></h2></div>
+    </div>
+    <div class="grid" id="filmGrid"></div>
+  </section>
+
+  <section class="bin" id="social">
+    <div class="bin-head">
+      <div><div class="eyebrow" style="--k:var(--c-teal)"><span class="chip"></span>Social content</div><h2 data-t="socialH"></h2></div>
+      <p data-t="socialP"></p>
+    </div>
+    <div class="grid" id="socialGrid"></div>
+  </section>
+
+  <section class="bin" id="latest">
+    <div class="bin-head">
+      <div><div class="eyebrow" style="--k:var(--c-sky)"><span class="chip"></span>Latest cuts · 2026</div><h2 data-t="latestH"></h2></div>
+    </div>
+    <div class="grid" id="latestGrid"></div>
+  </section>
+
+  <section class="bin" id="graphic">
+    <div class="bin-head">
+      <div><div class="eyebrow" style="--k:var(--c-amber)"><span class="chip"></span>Graphic design · 15</div><h2 data-t="gfxH"></h2></div>
+      <p data-t="gfxP"></p>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="gal" id="gal"></div>
+  </section>
+
+  <section class="bin" id="about">
+    <div class="bin-head">
+      <div><div class="eyebrow"><span class="chip"></span>About</div><h2 data-t="aboutH"></h2></div>
+      <p data-t="aboutP"></p>
+    </div>
+    <div class="about">
+      <div class="panel">
+        <h3 data-t="factsH"></h3>
+        <dl class="facts" id="facts"></dl>
+      </div>
+      <div class="panel">
+        <h3 data-t="langH"></h3>
+        <div class="langs" id="langs"></div>
+      </div>
+      <div class="panel" style="grid-column:1/-1">
+        <h3 data-t="skillsH"></h3>
+        <div class="tools"><span class="main">Premiere Pro</span><span class="main">CapCut</span><span class="main">After Effects</span><span>Photoshop</span><span>Illustrator</span><span>AI tools</span></div>
+        <div class="phases" id="phases"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div>
+      <h2>Let's <em>cut</em><br>together</h2>
+      <p style="margin-top:14px;color:#A6A8B6" data-t="contactP"></p>
+    </div>
+    <div class="lines">
+      <div class="row"><small data-t="phoneL"></small><strong id="phone"><a href="tel:+8562054479922" style="text-decoration:none">(+856) 020 54479922</a></strong><button class="copy" type="button" data-copy="phone" data-t="copy"></button></div>
+      <div class="row"><small data-t="emailL"></small><strong id="email"><a href="mailto:py.paoyang@gmail.com" style="text-decoration:none">py.paoyang@gmail.com</a></strong><button class="copy" type="button" data-copy="email" data-t="copy"></button></div>
+      <div class="row"><small data-t="placeL"></small><strong data-t="place"></strong></div>
+      <a class="btn" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1ag8eeT7CpLB2wJ25WIQIHLitsiL-PuFk" data-t="driveAll"></a>
+    </div>
+  </section>
+
+  <footer><span>© 2026 Pao Yang · Vientiane</span><span class="mono">END · 00:02:59:24</span></footer>
+</main>
+
+<div class="lb" id="pl" hidden role="dialog" aria-modal="true" aria-label="Video player">
+  <div class="lb-top"><span class="mono" id="plTitle"></span><button class="lb-close" id="plClose" type="button" data-t="close"></button></div>
+  <div class="pl-stage"><video id="plVid" controls playsinline preload="metadata"></video></div>
+  <div class="lb-cap"><div class="parts" id="plParts" hidden></div><span id="plSub"></span></div>
+</div>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Graphic viewer">
+  <div class="lb-top"><span class="mono" id="lbCount">01 / 15</span><button class="lb-close" id="lbClose" type="button" data-t="close"></button></div>
+  <div class="lb-stage">
+    <img id="lbImg" alt="">
+    <button class="nav prev" id="lbPrev" type="button" aria-label="Previous">◀</button>
+    <button class="nav next" id="lbNext" type="button" aria-label="Next">▶</button>
+  </div>
+  <div class="lb-cap"><b id="lbTitle"></b><span id="lbClient"></span></div>
+</div>
+
+<script>
+const D = id => "https://drive.google.com/file/d/" + id + "/view";
+const T = {
+  th: {
+    eyebrow: "พอร์ตโฟลิโอ · นครหลวงเวียงจันทน์",
+    lede: "นักตัดต่อวิดีโอที่ถนัดคอนเทนต์สั้นสำหรับสื่อออนไลน์ ทำได้ตั้งแต่คิดหัวข้อ เขียนสคริปต์ ทำสตอรีบอร์ด ไปจนถึงตัดต่อ ใส่ซับไตเติล เอฟเฟกต์ และเพลง",
+    ctaWork: "▶ ดูผลงาน", ctaContact: "ติดต่อร่วมงาน",
+    reelCap: "Showreel รวมผลงานตัดต่อ · กดเพื่อเล่น",
+    play: "▶ เล่นวิดีโอ", part: "ตอน", playSub: "ย่อขนาดไฟล์สำหรับเว็บ · ไฟล์ต้นฉบับความละเอียดสูงกว่า",
+    animH: "แอนิเมชัน โปรเจกต์จบปริญญาตรี",
+    animP: "แอนิเมชันแบบ Frame by Frame ที่ทำเองทุกขั้นตอน ตั้งแต่โครงเรื่องจนถึงแต่งเพลงประกอบ",
+    steps: ["วางโครงเรื่องและสตอรีบอร์ด", "ออกแบบตัวละคร กำกับเสียงพากย์", "แอนิเมตแบบ Frame by Frame", "ตัดต่อ ใส่ซับไตเติล เอฟเฟกต์ และแต่งเพลงเอง"],
+    watchDrive: "ดูวิดีโอใน Google Drive ↗",
+    filmH: "หนังสั้น", socialH: "คอนเทนต์โซเชียลมีเดีย",
+    socialP: "คลิปสั้นที่เล่าเรื่องให้เข้าใจง่าย เลือก B-Roll เพลง และจังหวะให้เข้ากับเนื้อหา",
+    latestH: "ผลงานล่าสุดปี 2026",
+    gfxH: "ผลงานกราฟิกดีไซน์",
+    gfxP: "โปสเตอร์โปรโมชันและประกาศโฆษณา คลิกที่ภาพเพื่อดูขนาดเต็ม แล้วกด ◀ ▶ เพื่อเลื่อนดูทีละชิ้น",
+    aboutH: "เกี่ยวกับผม", aboutP: "จบปริญญาตรีสาขา IT และนำความรู้ด้านเทคโนโลยีมาใช้กับงานตัดต่อ กราฟิก และการใช้ AI ช่วยพัฒนาคอนเทนต์",
+    factsH: "ข้อมูล", langH: "ภาษา", skillsH: "ทักษะและเครื่องมือ",
+    facts: [["การศึกษา", "ปริญญาตรี เทคโนโลยีสารสนเทศ (IT)"], ["สถาบัน", "มหาวิทยาลัยแห่งชาติลาว"], ["GPA", "3.53 / 4.00"], ["ที่อยู่", "นาเสี้ยว เมืองนาทรายทอง นครหลวงเวียงจันทน์"]],
+    langs: [["ลาว", "ดีมาก", 95], ["ไทย", "สื่อสารได้", 70], ["อังกฤษ", "พื้นฐาน", 35]],
+    phases: [["วางแผนก่อนตัดต่อ", ["คิดหัวข้อคอนเทนต์", "วางโครงเรื่องและเขียนสคริปต์", "ทำสตอรีบอร์ด ใช้ AI ช่วยหาไอเดีย"]], ["ตัดต่อ", ["วิดีโอสั้นสำหรับสื่อออนไลน์", "เรียบเรียงฟุตเทจให้เข้าใจง่าย", "วางแผนและเลือกใช้ B-Roll"]], ["ตกแต่งและเสียง", ["Subtitle และ Text Animation", "Transition และ Sound Effects", "เลือกเพลงให้เข้ากับอารมณ์และจังหวะ"]]],
+    contactP: "พร้อมร่วมงานกับทีมของคุณ ติดต่อได้ทางโทรศัพท์ WhatsApp หรืออีเมล",
+    phoneL: "โทร", emailL: "อีเมล", placeL: "ที่อยู่", place: "นครหลวงเวียงจันทน์ สปป.ลาว",
+    copy: "คัดลอก", copied: "คัดลอกแล้ว", driveAll: "ดูผลงานทั้งหมดใน Google Drive ↗", close: "ปิด ✕",
+    watch: "ดูใน Drive ↗",
+    nav: ["Showreel", "แอนิเมชัน", "หนังสั้น", "โซเชียล", "ล่าสุด", "กราฟิก", "เกี่ยวกับ", "ติดต่อ"],
+    filters: ["ทั้งหมด", "คลินิกความงาม", "อสังหาฯ", "รับสมัครงาน", "วัสดุก่อสร้าง"],
+    film: [["The Bully", "หนังสั้น · เล่าเรื่องด้วยจังหวะและอารมณ์"]],
+    social: [["คอนเทนต์ทำชาเลนจ์", "ຄອນເທັ້ນທ້າທາຍ"], ["คอนเทนต์เปลี่ยนสายงาน", "ຄອນເທັ້ນປ່ຽນສາຍງານ"], ["คอนเทนต์วางแผนการเงิน", "ຄອນເທັ້ນວາງແຜນການເງີນ"], ["ฝึกพากย์เสียง", "ຝຶກພາກສຽງ"]],
+    latest: "ผลงานล่าสุด",
+    caps: ["โปสเตอร์โปรโมชันผ่าตัดลดขนาดหน้าผาก", "อินโฟกราฟิกจุดเด่นซิลิโคน Motiva", "โปรโมชัน PRP 6 แถม 6", "โปรโมชันยกกระชับหน้า Oligio", "โปรยิ่งจ่ายมาก ยิ่งได้แถมมาก", "โปรโมชัน Hyaron ใต้ตา", "โปสเตอร์ฟื้นฟูผิว", "โปรโมชันฟิลเลอร์ Caratfill", "ประกาศขายที่ดินและโกดัง", "โปรโมชันหน้าใส ผิวนุ่ม", "โปรโมชันโบท็อกซ์ Wondertox", "รับสมัครพนักงานรักษาความปลอดภัย", "โปรโมชันสังกะสีและลวด", "โปรโมชันสลายไขมัน Fat Caratfeel", "ประกาศโกดังให้เช่า"]
+  },
+  lo: {
+    eyebrow: "ພອດໂຟລິໂອ · ນະຄອນຫຼວງວຽງຈັນ",
+    lede: "ນັກຕັດຕໍ່ວີດີໂອທີ່ຖະໜັດຄອນເທັ້ນສັ້ນສຳລັບສື່ອອນລາຍ ເຮັດໄດ້ຕັ້ງແຕ່ຄິດຫົວຂໍ້, ຂຽນ Script, ສ້າງ Storyboard ຈົນຮອດຕັດຕໍ່, ໃສ່ Subtitle, Effects ແລະ ເພງ",
+    ctaWork: "▶ ເບິ່ງຜົນງານ", ctaContact: "ຕິດຕໍ່ຮ່ວມງານ",
+    reelCap: "Showreel ລວມຜົນງານຕັດຕໍ່ · ກົດເພື່ອຫຼິ້ນ",
+    play: "▶ ຫຼິ້ນວີດີໂອ", part: "ຕອນ", playSub: "ຫຍໍ້ຂະໜາດໄຟລ໌ສຳລັບເວັບ · ໄຟລ໌ຕົ້ນສະບັບຄວາມລະອຽດສູງກວ່າ",
+    animH: "ເອນີເມຊັ່ນ ບົດໂຄງການຈົບປະລິນຍາຕີ",
+    animP: "ເອນີເມຊັ່ນແບບ Frame by Frame ທີ່ເຮັດເອງທຸກຂັ້ນຕອນ ຕັ້ງແຕ່ໂຄງເລື່ອງຈົນຮອດແຕ່ງເພງປະກອບ",
+    steps: ["ວາງໂຄງເລື່ອງ ແລະ Storyboard", "ອອກແບບຕົວລະຄອນ, ກຳກັບສຽງພາກ", "ເອນີເມດແບບ Frame by Frame", "ຕັດຕໍ່, ໃສ່ Subtitle, Effects ແລະ ແຕ່ງເພງເອງ"],
+    watchDrive: "ເບິ່ງວີດີໂອໃນ Google Drive ↗",
+    filmH: "ໜັງສັ້ນ", socialH: "ຄອນເທັ້ນໂຊຊຽວມີເດຍ",
+    socialP: "ຄລິບສັ້ນທີ່ເລົ່າເລື່ອງໃຫ້ເຂົ້າໃຈງ່າຍ ເລືອກ B-Roll, ເພງ ແລະ ຈັງຫວະໃຫ້ເຂົ້າກັບເນື້ອຫາ",
+    latestH: "ຜົນງານລ່າສຸດປີ 2026",
+    gfxH: "ຜົນງານກຣາຟິກດີໄຊ",
+    gfxP: "ໂປສເຕີໂປຣໂມຊັ່ນ ແລະ ປະກາດໂຄສະນາ ກົດທີ່ຮູບເພື່ອເບິ່ງຂະໜາດເຕັມ ແລ້ວກົດ ◀ ▶ ເພື່ອເລື່ອນເບິ່ງ",
+    aboutH: "ກ່ຽວກັບຂ້ອຍ", aboutP: "ຈົບປະລິນຍາຕີ ສາຂາ IT ແລະ ນຳຄວາມຮູ້ດ້ານເຕັກໂນໂລຊີມາໃຊ້ກັບງານຕັດຕໍ່, ກຣາຟິກ ແລະ ການໃຊ້ AI ຊ່ວຍພັດທະນາຄອນເທັ້ນ",
+    factsH: "ຂໍ້ມູນ", langH: "ພາສາ", skillsH: "ທັກສະ ແລະ ເຄື່ອງມື",
+    facts: [["ການສຶກສາ", "ປະລິນຍາຕີ ເຕັກໂນໂລຊີຂໍ້ມູນຂ່າວສານ (IT)"], ["ສະຖາບັນ", "ມະຫາວິທະຍາໄລແຫ່ງຊາດ"], ["GPA", "3.53 / 4.00"], ["ທີ່ຢູ່", "ນາສ້ຽວ, ເມືອງນາຊາຍທອງ, ນະຄອນຫຼວງວຽງຈັນ"]],
+    langs: [["ລາວ", "ດີ", 95], ["ໄທ", "ສື່ສານໄດ້", 70], ["ອັງກິດ", "ພື້ນຖານ", 35]],
+    phases: [["ວາງແຜນກ່ອນຕັດຕໍ່", ["ຄິດຫົວຂໍ້ສ້າງຄອນເທັ້ນ", "ວາງໂຄງເລື່ອງ ແລະ ຂຽນ Script", "Storyboard, ໃຊ້ AI ຊ່ວຍຫາໄອເດຍ"]], ["ການຕັດຕໍ່", ["ວີດີໂອສັ້ນສຳລັບສື່ອອນລາຍ", "ຮຽບຮຽງ Footage ໃຫ້ເຂົ້າໃຈງ່າຍ", "ວາງແຜນ ແລະ ເລືອກໃຊ້ B-Roll"]], ["ຕົກແຕ່ງ ແລະ ສຽງ", ["Subtitle ແລະ Text Animation", "Transition ແລະ Sound Effects", "ເລືອກເພງໃຫ້ເຂົ້າກັບອາລົມ ແລະ ຈັງຫວະ"]]],
+    contactP: "ພ້ອມຮ່ວມງານກັບທີມຂອງທ່ານ ຕິດຕໍ່ໄດ້ທາງໂທລະສັບ, WhatsApp ຫຼື ອີເມວ",
+    phoneL: "ໂທ", emailL: "ອີເມວ", placeL: "ທີ່ຢູ່", place: "ນະຄອນຫຼວງວຽງຈັນ, ສປປ ລາວ",
+    copy: "ສຳເນົາ", copied: "ສຳເນົາແລ້ວ", driveAll: "ເບິ່ງຜົນງານທັງໝົດໃນ Google Drive ↗", close: "ປິດ ✕",
+    watch: "ເບິ່ງໃນ Drive ↗",
+    nav: ["Showreel", "ເອນີເມຊັ່ນ", "ໜັງສັ້ນ", "ໂຊຊຽວ", "ລ່າສຸດ", "ກຣາຟິກ", "ກ່ຽວກັບ", "ຕິດຕໍ່"],
+    filters: ["ທັງໝົດ", "ຄລີນິກຄວາມງາມ", "ອະສັງຫາລິມະຊັບ", "ຮັບສະໝັກງານ", "ວັດສະດຸກໍ່ສ້າງ"],
+    film: [["The Bully", "ໜັງສັ້ນ · ເລົ່າເລື່ອງດ້ວຍຈັງຫວະ ແລະ ອາລົມ"]],
+    social: [["ຄອນເທັ້ນທ້າທາຍ", "Challenge content"], ["ຄອນເທັ້ນປ່ຽນສາຍງານ", "Career change"], ["ຄອນເທັ້ນວາງແຜນການເງິນ", "Financial planning"], ["ຝຶກພາກສຽງ", "Voice-over practice"]],
+    latest: "ຜົນງານລ່າສຸດ",
+    caps: ["ໂປສເຕີໂປຣໂມຊັ່ນຜ່າຕັດຫຼຸດຂະໜາດໜ້າຜາກ", "ອິນໂຟກຣາຟິກຈຸດເດັ່ນຊິລິໂຄນ Motiva", "ໂປຣໂມຊັ່ນ PRP 6 ແຖມ 6", "ໂປຣໂມຊັ່ນຍົກກະຊັບໜ້າ Oligio", "ໂປຣຍິ່ງຈ່າຍຫຼາຍ ຍິ່ງໄດ້ແຖມຫຼາຍ", "ໂປຣໂມຊັ່ນ Hyaron ໃຕ້ຕາ", "ໂປສເຕີຟື້ນຟູຜິວ", "ໂປຣໂມຊັ່ນຟິວເລີ Caratfill", "ປະກາດຂາຍດິນ ແລະ ສາງ", "ໂປຣໂມຊັ່ນໜ້າໃສ ຜິວນຸ້ມ", "ໂປຣໂມຊັ່ນໂບທັອກ Wondertox", "ຮັບສະໝັກພະນັກງານຮັກສາຄວາມປອດໄພ", "ໂປຣໂມຊັ່ນສັງກະສີ ແລະ ລວດ", "ໂປຣໂມຊັ່ນສະຫຼາຍໄຂມັນ Fat Caratfeel", "ປະກາດສາງໃຫ້ເຊົ່າ"]
+  }
+};
+// client category per graphic: 1 clinic, 2 real estate, 3 recruitment, 4 construction
+const CAT = [1,1,1,1,1,1,1,1,2,1,1,3,4,1,2];
+const CLIENT = {1: "Beyond 693 Medical Center", 2: null, 3: null, 4: null};
+const NAV = [["top","--c-amber",2],["work","--c-violet",3],["film","--c-rose",2],["social","--c-teal",3],["latest","--c-sky",3],["graphic","--c-amber",3],["about","--c-violet",2],["contact","--c-rose",1.5]];
+const FILM = [["1f8fZ8r-wK8PZD-qezXojpy2LOjw1C9MI","SHORT FILM · 2023","--c-rose","bully"]];
+const SOCIAL = ["1s5pcvE-eP56JnYQ33SAhEvJ3VK1mTuZr","1rAwqT1q2s7PefNqVPQlS23h2nnfKOfEb","1RwXpKdiNKNBYn1_ldtkFg0MCmzC3sAA8","1duo_TpXIDIUjiCXIirwMGN2YUpaNrZn2"];
+const SOCIAL_SRC = ["challenge", "career", "finance", "voice"];
+const PARTS = {};
+const LATEST = [["1HBK49lv2F30QEF2g_xKmnf50paOMcBqS","hamony.mp4","hamony"],["1Q37m8ejNtGUZNIcGG8BfysdFA9mH604x","fn2k tt.mp4","fn2k"],["1hEHUI0IrkyzFO2e2HZXb9c6WzGdu70iQ","0911 (1)(3).mp4","new0911"],["1kYMCYBFlowHEucUEtJoAdMc2GMzAZEQt","0910(1).mp4","v0910"],["1ZwYLBRA6k2GM_zWBzYVhX9yYKzVNdx3T","0929 (1)(1).mp4","v0929"]];
+
+let lang = "th", filter = 0, view = [], idx = 0;
+try { const s = localStorage.getItem("py-lang"); if (s === "lo" || s === "th") lang = s; } catch (e) {}
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const card = (id, tag, k, title, sub, L, src) => {
+  const thumb = `<div class="thumb${src ? " pv" : ""}"${src ? ` style="background-image:url(vid/${src}.jpg)"` : ""}><span class="perf t"></span><span class="pb" aria-hidden="true"></span><span class="tag">${esc(tag)}</span><span class="perf b"></span></div>`;
+  if (src) return `<button class="vcard" type="button" style="--k:var(${k})" data-play="${src}" data-title="${esc(title)}">${thumb}
+    <div class="vbody"><h3>${esc(title)}</h3><p>${esc(sub)}</p><span class="go">${esc(L.play)}</span></div></button>`;
+  return `<a class="vcard" style="--k:var(${k})" target="_blank" rel="noopener" href="${D(id)}">${thumb}
+    <div class="vbody"><h3>${esc(title)}</h3><p>${esc(sub)}</p><span class="go ext">${esc(L.watch)}</span></div></a>`;
+};
+const clientName = (c, L) => CLIENT[c] || L.filters[c];
+
+function render() {
+  const L = T[lang];
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-lang]").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
+  document.querySelectorAll("[data-t]").forEach(el => { const v = L[el.dataset.t]; if (typeof v === "string") el.textContent = v; });
+  $("#v1").innerHTML = NAV.map(([id, k, w], i) => `<button class="clip" type="button" data-go="${id}" style="--k:var(${k});--w:${w}" title="${esc(L.nav[i])}">${esc(L.nav[i])}</button>`).join("");
+  $("#steps").innerHTML = L.steps.map((s, i) => `<li><b>0${i+1}</b><span>${esc(s)}</span></li>`).join("");
+  $("#filmGrid").innerHTML = FILM.map(([id, tag, k, src], i) => card(id, tag, k, L.film[i][0], L.film[i][1], L, src)).join("");
+  $("#socialGrid").innerHTML = SOCIAL.map((id, i) => card(id, "CONTENT", "--c-teal", L.social[i][0], L.social[i][1], L, SOCIAL_SRC[i])).join("");
+  $("#latestGrid").innerHTML = LATEST.map(([id, f, src], i) => card(id, "NEW · 2026", "--c-sky", `${L.latest} 0${i+1}`, f, L, src)).join("");
+  $("#facts").innerHTML = L.facts.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("");
+  $("#langs").innerHTML = L.langs.map(([n, lv, p]) => `<div class="lv"><span>${esc(n)}</span><span class="meter"><i style="width:${p}%"></i></span><span style="color:var(--muted)">${esc(lv)}</span></div>`).join("");
+  $("#phases").innerHTML = L.phases.map(([h, items], i) => `<div class="phase" style="--k:var(${["--c-violet","--c-teal","--c-amber"][i]})"><h4>${esc(h)}</h4><ul>${items.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
+  $("#filters").innerHTML = L.filters.map((f, i) => {
+    const n = i === 0 ? CAT.length : CAT.filter(c => c === i).length;
+    return `<button type="button" data-f="${i}" aria-pressed="${i === filter}">${esc(f)} <span class="mono" style="opacity:.6">${n}</span></button>`;
+  }).join("");
+  renderGallery();
+  if (!$("#lb").hidden) showLB();
+  syncPlayhead();
+}
+function renderGallery() {
+  const L = T[lang];
+  view = CAT.map((c, i) => i).filter(i => filter === 0 || CAT[i] === filter);
+  $("#gal").innerHTML = view.map((i, j) => `<button type="button" data-open="${j}" aria-label="${esc(L.caps[i])}"><img loading="lazy" src="img/t${String(i+1).padStart(2,"0")}.jpg" alt="${esc(L.caps[i])}"><span class="n">${String(i+1).padStart(2,"0")}</span></button>`).join("");
+}
+function showLB() {
+  const L = T[lang], i = view[idx];
+  $("#lbImg").src = `img/g${String(i+1).padStart(2,"0")}.jpg`;
+  $("#lbImg").alt = L.caps[i];
+  $("#lbCount").textContent = `${String(idx+1).padStart(2,"0")} / ${String(view.length).padStart(2,"0")}`;
+  $("#lbTitle").textContent = L.caps[i];
+  $("#lbClient").textContent = clientName(CAT[i], L);
+}
+function openLB(j) { idx = j; $("#lb").hidden = false; document.body.style.overflow = "hidden"; showLB(); $("#lbNext").focus(); }
+let plList = [], plIdx = 0;
+function loadPart(i, autoplay) {
+  plIdx = i; const v = $("#plVid"); v.src = "vid/" + plList[i];
+  const chips = $("#plParts");
+  chips.hidden = plList.length < 2;
+  chips.innerHTML = plList.length < 2 ? "" : plList.map((_, k) => `<button type="button" data-part="${k}" aria-pressed="${k === i}">${esc(T[lang].part)} ${k + 1}/${plList.length}</button>`).join("");
+  if (autoplay) v.play().catch(() => {});
+}
+function openPL(src, title) {
+  const v = $("#plVid"); v.poster = `vid/${src}.jpg`;
+  plList = PARTS[src] || [src + ".mp4"]; loadPart(0, false);
+  $("#plTitle").textContent = title || ""; $("#plSub").textContent = T[lang].playSub;
+  $("#pl").hidden = false; document.body.style.overflow = "hidden";
+  v.play().catch(() => {}); $("#plClose").focus();
+}
+function closePL() { const v = $("#plVid"); v.pause(); v.removeAttribute("src"); v.load(); $("#pl").hidden = true; document.body.style.overflow = ""; }
+function closeLB() { $("#lb").hidden = true; document.body.style.overflow = ""; }
+function step(d) { idx = (idx + d + view.length) % view.length; showLB(); }
+
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-lang]"); if (b) { lang = b.dataset.lang; try { localStorage.setItem("py-lang", lang); } catch (_) {} render(); return; }
+  const g = e.target.closest("[data-go]"); if (g) { document.getElementById(g.dataset.go).scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}); return; }
+  const f = e.target.closest("[data-f]"); if (f) { filter = +f.dataset.f; render(); return; }
+  const pt = e.target.closest("[data-part]"); if (pt) { loadPart(+pt.dataset.part, true); return; }
+  const pv = e.target.closest("[data-play]"); if (pv) { openPL(pv.dataset.play, pv.dataset.title); return; }
+  const o = e.target.closest("[data-open]"); if (o) { openLB(+o.dataset.open); return; }
+  const c = e.target.closest("[data-copy]");
+  if (c) {
+    const text = $("#" + c.dataset.copy).textContent, L = T[lang];
+    const done = () => { c.textContent = L.copied; setTimeout(() => c.textContent = T[lang].copy, 1500); };
+    const sel = () => { const r = document.createRange(); r.selectNodeContents($("#" + c.dataset.copy)); const s = getSelection(); s.removeAllRanges(); s.addRange(r); };
+    try { navigator.clipboard.writeText(text).then(done, sel); } catch (_) { sel(); }
+  }
+});
+$("#lbPrev").onclick = () => step(-1);
+$("#lbNext").onclick = () => step(1);
+$("#lbClose").onclick = closeLB;
+$("#plClose").onclick = closePL;
+$("#plVid").addEventListener("ended", () => { if (plIdx < plList.length - 1) loadPart(plIdx + 1, true); });
+$("#pl").addEventListener("click", e => { if (e.target.id === "pl" || e.target.classList.contains("pl-stage")) closePL(); });
+$("#lb").addEventListener("click", e => { if (e.target.id === "lb" || e.target.classList.contains("lb-stage")) closeLB(); });
+document.addEventListener("keydown", e => {
+  if (!$("#pl").hidden && e.key === "Escape") { closePL(); return; }
+  if ($("#lb").hidden) return;
+  if (e.key === "ArrowRight") step(1); else if (e.key === "ArrowLeft") step(-1); else if (e.key === "Escape") closeLB();
+});
+let sx = null;
+$("#lb").addEventListener("touchstart", e => { sx = e.touches[0].clientX; }, {passive: true});
+$("#lb").addEventListener("touchend", e => { if (sx === null) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1); sx = null; });
+
+// timecode + playhead follow scroll (3 min "programme" at 25 fps)
+function syncPlayhead() {
+  const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+  const p = Math.min(1, Math.max(0, scrollY / max));
+  const total = Math.round(p * 180 * 25);
+  const ff = total % 25, s = Math.floor(total / 25);
+  $("#tc").textContent = `00:${String(Math.floor(s/60)).padStart(2,"0")}:${String(s%60).padStart(2,"0")}:${String(ff).padStart(2,"0")}`;
+  const clips = $("#v1"), ph = $("#playhead"), nav = $(".timeline");
+  if (clips && nav) {
+    const cr = clips.getBoundingClientRect(), nr = nav.getBoundingClientRect();
+    ph.style.left = (cr.left - nr.left + p * cr.width - 1) + "px";
+  }
+  let cur = "top";
+  NAV.forEach(([id]) => { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top < innerHeight * .4) cur = id; });
+  document.querySelectorAll("#v1 .clip").forEach(c => c.classList.toggle("on", c.dataset.go === cur));
+}
+addEventListener("scroll", syncPlayhead, {passive: true});
+addEventListener("resize", syncPlayhead);
+render();
+</script>
+
+</body>
 </html>

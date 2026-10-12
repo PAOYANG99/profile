@@ -1,8 +1,4 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
 
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [react(),tailwindcss()],
-})
+// Static portfolio page: index.html at the root, media in public/
+export default defineConfig({})
