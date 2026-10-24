@@ -161,6 +161,11 @@ button.watch{background:none;border:0;padding:0;font:inherit;cursor:pointer}
 .parts{display:flex;flex-wrap:wrap;gap:6px;width:100%}
 .parts button{all:unset;cursor:pointer;font-family:var(--mono);font-size:12px;padding:5px 10px;border-radius:6px;border:1px solid #3A3C48;color:#ECEBE6}
 .parts button[aria-pressed="true"]{background:#FFB020;color:#121318;border-color:#FFB020}
+/* 3D background */
+#bg3d{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block}
+.bg-scrim{position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(90deg,color-mix(in srgb,var(--bg) 80%,transparent) 0%,color-mix(in srgb,var(--bg) 58%,transparent) 48%,color-mix(in srgb,var(--bg) 32%,transparent) 100%)}
+@media (max-width:700px){.bg-scrim{background:color-mix(in srgb,var(--bg) 70%,transparent)}}
+main.wrap{position:relative;z-index:1}
 /* lightbox */
 [hidden]{display:none!important}
 .lb{position:fixed;inset:0;z-index:50;background:rgba(8,9,12,.94);display:grid;grid-template-rows:auto 1fr auto;padding:calc(env(safe-area-inset-top,0px) + 12px) 16px calc(env(safe-area-inset-bottom,0px) + 14px);color:#ECEBE6}
@@ -235,6 +240,130 @@ footer{padding-block:0 40px;color:var(--muted);font-size:13px;display:flex;flex-
     </div>
   </div>
 </header>
+
+<canvas id="bg3d" aria-hidden="true"></canvas>
+<div class="bg-scrim" aria-hidden="true"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* 3D background: Pao's own graphic work as frames on a slowly turning reel, with floating dust. */
+(function () {
+  if (!window.THREE) return;
+  const canvas = document.getElementById("bg3d");
+  let renderer;
+  try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true }); }
+  catch (e) { canvas.remove(); return; }
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const scene = new THREE.Scene();
+  const cam = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+  const css = () => getComputedStyle(document.documentElement);
+  const col = (name, fb) => new THREE.Color((css().getPropertyValue(name) || fb).trim() || fb);
+
+  scene.fog = new THREE.Fog(col("--bg", "#121318"), 9, 24);
+
+  // the reel
+  const reel = new THREE.Group();
+  reel.position.set(0, 0, -5);
+  reel.rotation.set(0.3, 0, -0.12);
+  scene.add(reel);
+
+  const N = 28, R = 8.6, H = 1.9;
+  const loader = new THREE.TextureLoader();
+  const edges = [], mats = [];
+  for (let i = 0; i < N; i++) {
+    const a = (i / N) * Math.PI * 2, row = i % 2 ? 1 : -1;
+    const g = new THREE.Group();
+    const mat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, side: THREE.DoubleSide });
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), mat);
+    const edgeMat = new THREE.LineBasicMaterial({ color: col("--tally", "#FFB020"), transparent: true, opacity: 0.55 });
+    const edge = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(1.08, 1.08)), edgeMat);
+    mesh.scale.set(H, H, 1); edge.scale.set(H, H, 1);
+    g.add(mesh, edge);
+    g.position.set(Math.sin(a) * R, row * 1.25 + Math.sin(a * 3) * 0.3, Math.cos(a) * R);
+    g.lookAt(0, g.position.y, 0); g.rotateY(Math.PI);
+    reel.add(g);
+    edges.push(edgeMat); mats.push(mat);
+    loader.load(`img/t${String(i + 1).padStart(2, "0")}.jpg`, tex => {
+      tex.encoding = THREE.sRGBEncoding;
+      const ar = tex.image.width / tex.image.height;
+      mesh.scale.set(H * ar, H, 1); edge.scale.set(H * ar, H, 1);
+      mat.map = tex; mat.needsUpdate = true; mat.userData.target = 0.92;
+      if (reduce) { mat.opacity = 0.92; draw(); }
+    });
+  }
+
+  // orbit line the frames ride on
+  const orbitMat = new THREE.MeshBasicMaterial({ color: col("--tally", "#FFB020"), transparent: true, opacity: 0.35 });
+  const orbit = new THREE.Mesh(new THREE.TorusGeometry(R, 0.012, 8, 240), orbitMat);
+  orbit.rotation.x = Math.PI / 2;
+  reel.add(orbit);
+
+  // dust
+  const COUNT = innerWidth < 700 ? 350 : 700;
+  const pos = new Float32Array(COUNT * 3);
+  for (let i = 0; i < COUNT; i++) {
+    const r = 4 + Math.random() * 14, th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
+    pos[i * 3] = r * Math.sin(ph) * Math.cos(th);
+    pos[i * 3 + 1] = r * Math.cos(ph) * 0.6;
+    pos[i * 3 + 2] = r * Math.sin(ph) * Math.sin(th) - 5;
+  }
+  const dGeo = new THREE.BufferGeometry();
+  dGeo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+  const dustMat = new THREE.PointsMaterial({ color: col("--tally", "#FFB020"), size: 0.06, transparent: true, opacity: 0.7, depthWrite: false });
+  const dust = new THREE.Points(dGeo, dustMat);
+  scene.add(dust);
+
+  function applyTheme() {
+    scene.fog.color.copy(col("--bg", "#121318"));
+    const t = col("--tally", "#FFB020");
+    edges.forEach(m => m.color.copy(t)); orbitMat.color.copy(t); dustMat.color.copy(t);
+    draw();
+  }
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applyTheme);
+  new MutationObserver(applyTheme).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+  function size() {
+    const w = innerWidth, h = innerHeight;
+    renderer.setSize(w, h, false);
+    cam.aspect = w / h;
+    cam.position.z = w < 700 ? 13 : 10;
+    cam.updateProjectionMatrix();
+    draw();
+  }
+
+  let mx = 0, my = 0;
+  addEventListener("pointermove", e => { mx = e.clientX / innerWidth - 0.5; my = e.clientY / innerHeight - 0.5; }, { passive: true });
+
+  function draw() { renderer.render(scene, cam); }
+
+  let T = 0, last = 0, raf = 0;
+  function tick(now) {
+    if (last) T += Math.min(0.1, (now - last) / 1000);
+    last = now;
+    reel.rotation.y = T * 0.035 + scrollY * 0.0007;
+    dust.rotation.y = -T * 0.01;
+    cam.position.x += (mx * 1.2 - cam.position.x) * 0.04;
+    cam.position.y += (-my * 0.8 - cam.position.y) * 0.04;
+    cam.lookAt(0, 0, -5);
+    mats.forEach(m => { if (m.userData.target && m.opacity < m.userData.target) m.opacity = Math.min(m.userData.target, m.opacity + 0.02); });
+    draw();
+    raf = requestAnimationFrame(tick);
+  }
+
+  addEventListener("resize", size);
+  size();
+  if (reduce) { cam.lookAt(0, 0, -5); draw(); }
+  else {
+    raf = requestAnimationFrame(tick);
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) cancelAnimationFrame(raf);
+      else { last = 0; raf = requestAnimationFrame(tick); }
+    });
+  }
+})();
+</script>
 
 <main class="wrap" id="top">
   <section class="hero">
