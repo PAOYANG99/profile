@@ -263,6 +263,23 @@ footer{padding-block:0 40px;color:var(--muted);font-size:13px;display:flex;flex-
     <span id="playhead" aria-hidden="true"></span>
   </nav>
 
+  <section class="bin" id="ad">
+    <div class="bin-head">
+      <div><div class="eyebrow" style="--k:var(--c-rose)"><span class="chip"></span>Commercial · 2026</div><h2 data-t="adH"></h2></div>
+      <p data-t="adP"></p>
+    </div>
+    <div class="feature">
+      <button class="screen" type="button" data-play="ad_seven" data-title="Seven Entertainment">
+        <img class="poster" src="vid/ad_seven.jpg" alt=""><span class="safe"></span><span class="tcr">16:9 · 00:41</span><span class="play" aria-hidden="true"></span><span class="lbl">COMMERCIAL · 2026</span>
+      </button>
+      <div>
+        <h3>Seven Entertainment</h3>
+        <ol class="steps" id="adSteps"></ol>
+        <button class="watch" type="button" data-play="ad_seven" data-title="Seven Entertainment" data-t="play"></button>
+      </div>
+    </div>
+  </section>
+
   <section class="bin" id="work">
     <div class="bin-head">
       <div><div class="eyebrow" style="--k:var(--c-violet)"><span class="chip"></span>Senior project · 2025</div><h2 data-t="animH"></h2></div>
@@ -304,7 +321,7 @@ footer{padding-block:0 40px;color:var(--muted);font-size:13px;display:flex;flex-
 
   <section class="bin" id="graphic">
     <div class="bin-head">
-      <div><div class="eyebrow" style="--k:var(--c-amber)"><span class="chip"></span>Graphic design · 15</div><h2 data-t="gfxH"></h2></div>
+      <div><div class="eyebrow" style="--k:var(--c-amber)"><span class="chip"></span>Graphic design · 28</div><h2 data-t="gfxH"></h2></div>
       <p data-t="gfxP"></p>
     </div>
     <div class="filters" id="filters"></div>
@@ -392,12 +409,14 @@ const T = {
     phoneL: "โทร", emailL: "อีเมล", placeL: "ที่อยู่", place: "นาเสี้ยว เมืองนาทรายทอง นครหลวงเวียงจันทน์ สปป.ลาว",
     copy: "คัดลอก", copied: "คัดลอกแล้ว", driveAll: "ดูผลงานทั้งหมดใน Google Drive ↗", close: "ปิด ✕",
     watch: "ดูใน Drive ↗",
-    nav: ["Showreel", "แอนิเมชัน", "หนังสั้น", "โซเชียล", "ล่าสุด", "กราฟิก", "เกี่ยวกับ", "ติดต่อ"],
-    filters: ["ทั้งหมด", "คลินิกความงาม", "อสังหาฯ", "รับสมัครงาน", "วัสดุก่อสร้าง"],
+    nav: ["Showreel", "โฆษณา", "แอนิเมชัน", "หนังสั้น", "โซเชียล", "ล่าสุด", "กราฟิก", "เกี่ยวกับ", "ติดต่อ"],
+    filters: ["ทั้งหมด", "คลินิกความงาม", "อสังหาฯ", "รับสมัครงาน", "วัสดุก่อสร้าง", "อื่น ๆ"],
+    adH: "วิดีโอโฆษณา", adP: "โฆษณาบริการถ่ายภาพมุมสูงด้วยโดรนของ Seven Entertainment สำหรับงานอีเวนต์และอสังหาริมทรัพย์",
+    adSteps: ["วางโครงเรื่องโฆษณาความยาว 40 วินาที", "ร้อยเรียงภาพโดรน งานอีเวนต์ และที่ดิน", "ใส่ข้อความ กราฟิก และโลโก้แบรนด์", "ตัดต่อตามจังหวะเพลงและเสียงประกอบ"],
     film: [["The Bully", "หนังสั้น · เล่าเรื่องด้วยจังหวะและอารมณ์"]],
     social: [["คอนเทนต์ทำชาเลนจ์", "ຄອນເທັ້ນທ້າທາຍ"], ["คอนเทนต์เปลี่ยนสายงาน", "ຄອນເທັ້ນປ່ຽນສາຍງານ"], ["คอนเทนต์วางแผนการเงิน", "ຄອນເທັ້ນວາງແຜນການເງີນ"], ["ฝึกพากย์เสียง", "ຝຶກພາກສຽງ"]],
     latest: "ผลงานล่าสุด",
-    caps: ["โปสเตอร์โปรโมชันผ่าตัดลดขนาดหน้าผาก", "อินโฟกราฟิกจุดเด่นซิลิโคน Motiva", "โปรโมชัน PRP 6 แถม 6", "โปรโมชันยกกระชับหน้า Oligio", "โปรยิ่งจ่ายมาก ยิ่งได้แถมมาก", "โปรโมชัน Hyaron ใต้ตา", "โปสเตอร์ฟื้นฟูผิว", "โปรโมชันฟิลเลอร์ Caratfill", "ประกาศขายที่ดินและโกดัง", "โปรโมชันหน้าใส ผิวนุ่ม", "โปรโมชันโบท็อกซ์ Wondertox", "รับสมัครพนักงานรักษาความปลอดภัย", "โปรโมชันสังกะสีและลวด", "โปรโมชันสลายไขมัน Fat Caratfeel", "ประกาศโกดังให้เช่า"]
+    caps: ["โปสเตอร์โปรโมชันผ่าตัดลดขนาดหน้าผาก", "อินโฟกราฟิกจุดเด่นซิลิโคน Motiva", "โปรโมชัน PRP 6 แถม 6", "โปรโมชันยกกระชับหน้า Oligio", "โปรยิ่งจ่ายมาก ยิ่งได้แถมมาก", "โปรโมชัน Hyaron ใต้ตา", "โปสเตอร์ฟื้นฟูผิว", "โปรโมชันฟิลเลอร์ Caratfill", "ประกาศขายที่ดินและโกดัง", "โปรโมชันหน้าใส ผิวนุ่ม", "โปรโมชันโบท็อกซ์ Wondertox", "รับสมัครพนักงานรักษาความปลอดภัย", "โปรโมชันสังกะสีและลวด", "โปรโมชันสลายไขมัน Fat Caratfeel", "ประกาศโกดังให้เช่า", "โปรโมชันเสริมหน้าอก Motiva", "โปรโมชันโบท็อกซ์ Allergan", "โปรโมชันผ่าตัดดึงหน้า", "โปรโมชันนวด", "โปรโมชันทรีตเมนต์ใต้ตา", "โปรโมชันโบท็อกซ์ Neuronox", "โปรโมชันเสริมหน้าผากซิลิโคน", "โปรโมชันเสริมขมับ", "โปรโมชันโบท็อกซ์ Nabota", "ประกาศรับสมัครพนักงานโรงแรม", "ประกาศรับสมัครพนักงานโรงแรมและห้องอาหาร", "We Are Hiring รับสมัครพนักงานบัญชีและช่างเทคนิค", "โปสเตอร์ไลฟ์สดวันเกิด"]
   },
   lo: {
     eyebrow: "ພອດໂຟລິໂອ · ນະຄອນຫຼວງວຽງຈັນ",
@@ -423,18 +442,22 @@ const T = {
     phoneL: "ໂທ", emailL: "ອີເມວ", placeL: "ທີ່ຢູ່", place: "ນາສ້ຽວ, ເມືອງນາຊາຍທອງ, ນະຄອນຫຼວງວຽງຈັນ, ສປປ ລາວ",
     copy: "ສຳເນົາ", copied: "ສຳເນົາແລ້ວ", driveAll: "ເບິ່ງຜົນງານທັງໝົດໃນ Google Drive ↗", close: "ປິດ ✕",
     watch: "ເບິ່ງໃນ Drive ↗",
-    nav: ["Showreel", "ເອນີເມຊັ່ນ", "ໜັງສັ້ນ", "ໂຊຊຽວ", "ລ່າສຸດ", "ກຣາຟິກ", "ກ່ຽວກັບ", "ຕິດຕໍ່"],
-    filters: ["ທັງໝົດ", "ຄລີນິກຄວາມງາມ", "ອະສັງຫາລິມະຊັບ", "ຮັບສະໝັກງານ", "ວັດສະດຸກໍ່ສ້າງ"],
+    nav: ["Showreel", "ໂຄສະນາ", "ເອນີເມຊັ່ນ", "ໜັງສັ້ນ", "ໂຊຊຽວ", "ລ່າສຸດ", "ກຣາຟິກ", "ກ່ຽວກັບ", "ຕິດຕໍ່"],
+    filters: ["ທັງໝົດ", "ຄລີນິກຄວາມງາມ", "ອະສັງຫາລິມະຊັບ", "ຮັບສະໝັກງານ", "ວັດສະດຸກໍ່ສ້າງ", "ອື່ນໆ"],
+    adH: "ວີດີໂອໂຄສະນາ", adP: "ໂຄສະນາບໍລິການຖ່າຍພາບມຸມສູງດ້ວຍໂດຣນຂອງ Seven Entertainment ສຳລັບງານອີເວັ້ນ ແລະ ອະສັງຫາລິມະຊັບ",
+    adSteps: ["ວາງໂຄງເລື່ອງໂຄສະນາຄວາມຍາວ 40 ວິນາທີ", "ຮຽບຮຽງພາບໂດຣນ, ງານອີເວັ້ນ ແລະ ທີ່ດິນ", "ໃສ່ຂໍ້ຄວາມ, ກຣາຟິກ ແລະ ໂລໂກ້ແບຣນ", "ຕັດຕໍ່ຕາມຈັງຫວະເພງ ແລະ ສຽງປະກອບ"],
     film: [["The Bully", "ໜັງສັ້ນ · ເລົ່າເລື່ອງດ້ວຍຈັງຫວະ ແລະ ອາລົມ"]],
     social: [["ຄອນເທັ້ນທ້າທາຍ", "Challenge content"], ["ຄອນເທັ້ນປ່ຽນສາຍງານ", "Career change"], ["ຄອນເທັ້ນວາງແຜນການເງິນ", "Financial planning"], ["ຝຶກພາກສຽງ", "Voice-over practice"]],
     latest: "ຜົນງານລ່າສຸດ",
-    caps: ["ໂປສເຕີໂປຣໂມຊັ່ນຜ່າຕັດຫຼຸດຂະໜາດໜ້າຜາກ", "ອິນໂຟກຣາຟິກຈຸດເດັ່ນຊິລິໂຄນ Motiva", "ໂປຣໂມຊັ່ນ PRP 6 ແຖມ 6", "ໂປຣໂມຊັ່ນຍົກກະຊັບໜ້າ Oligio", "ໂປຣຍິ່ງຈ່າຍຫຼາຍ ຍິ່ງໄດ້ແຖມຫຼາຍ", "ໂປຣໂມຊັ່ນ Hyaron ໃຕ້ຕາ", "ໂປສເຕີຟື້ນຟູຜິວ", "ໂປຣໂມຊັ່ນຟິວເລີ Caratfill", "ປະກາດຂາຍດິນ ແລະ ສາງ", "ໂປຣໂມຊັ່ນໜ້າໃສ ຜິວນຸ້ມ", "ໂປຣໂມຊັ່ນໂບທັອກ Wondertox", "ຮັບສະໝັກພະນັກງານຮັກສາຄວາມປອດໄພ", "ໂປຣໂມຊັ່ນສັງກະສີ ແລະ ລວດ", "ໂປຣໂມຊັ່ນສະຫຼາຍໄຂມັນ Fat Caratfeel", "ປະກາດສາງໃຫ້ເຊົ່າ"]
+    caps: ["ໂປສເຕີໂປຣໂມຊັ່ນຜ່າຕັດຫຼຸດຂະໜາດໜ້າຜາກ", "ອິນໂຟກຣາຟິກຈຸດເດັ່ນຊິລິໂຄນ Motiva", "ໂປຣໂມຊັ່ນ PRP 6 ແຖມ 6", "ໂປຣໂມຊັ່ນຍົກກະຊັບໜ້າ Oligio", "ໂປຣຍິ່ງຈ່າຍຫຼາຍ ຍິ່ງໄດ້ແຖມຫຼາຍ", "ໂປຣໂມຊັ່ນ Hyaron ໃຕ້ຕາ", "ໂປສເຕີຟື້ນຟູຜິວ", "ໂປຣໂມຊັ່ນຟິວເລີ Caratfill", "ປະກາດຂາຍດິນ ແລະ ສາງ", "ໂປຣໂມຊັ່ນໜ້າໃສ ຜິວນຸ້ມ", "ໂປຣໂມຊັ່ນໂບທັອກ Wondertox", "ຮັບສະໝັກພະນັກງານຮັກສາຄວາມປອດໄພ", "ໂປຣໂມຊັ່ນສັງກະສີ ແລະ ລວດ", "ໂປຣໂມຊັ່ນສະຫຼາຍໄຂມັນ Fat Caratfeel", "ປະກາດສາງໃຫ້ເຊົ່າ", "ໂປຣໂມຊັ່ນເສີມໜ້າເອິກ Motiva", "ໂປຣໂມຊັ່ນໂບທັອກ Allergan", "ໂປຣໂມຊັ່ນຜ່າຕັດດຶງໜ້າ", "ໂປຣໂມຊັ່ນນວດ", "ໂປຣໂມຊັ່ນທຣີດເມັ້ນໃຕ້ຕາ", "ໂປຣໂມຊັ່ນໂບທັອກ Neuronox", "ໂປຣໂມຊັ່ນເສີມໜ້າຜາກຊິລິໂຄນ", "ໂປຣໂມຊັ່ນເສີມຂະໝັບ", "ໂປຣໂມຊັ່ນໂບທັອກ Nabota", "ປະກາດຮັບສະໝັກພະນັກງານໂຮງແຮມ", "ປະກາດຮັບສະໝັກພະນັກງານໂຮງແຮມ ແລະ ຫ້ອງອາຫານ", "We Are Hiring ຮັບສະໝັກພະນັກງານບັນຊີ ແລະ ຊ່າງເຕັກນິກ", "ໂປສເຕີໄລຟ໌ສົດວັນເກີດ"]
   }
 };
 // client category per graphic: 1 clinic, 2 real estate, 3 recruitment, 4 construction
-const CAT = [1,1,1,1,1,1,1,1,2,1,1,3,4,1,2];
+const CAT = [1,1,1,1,1,1,1,1,2,1,1,3,4,1,2, 1,1,1,1,1,1,1,1,1,3,3,3,5];
+// newest work first in the gallery
+const ORDER = [...Array(13).keys()].map(k => k + 15).concat([...Array(15).keys()]);
 const CLIENT = {1: "Beyond 693 Medical Center", 2: null, 3: null, 4: null};
-const NAV = [["top","--c-amber",2],["work","--c-violet",3],["film","--c-rose",2],["social","--c-teal",3],["latest","--c-sky",3],["graphic","--c-amber",3],["about","--c-violet",2],["contact","--c-rose",1.5]];
+const NAV = [["top","--c-amber",2],["ad","--c-rose",2],["work","--c-violet",3],["film","--c-rose",2],["social","--c-teal",3],["latest","--c-sky",3],["graphic","--c-amber",3],["about","--c-violet",2],["contact","--c-rose",1.5]];
 const FILM = [["1f8fZ8r-wK8PZD-qezXojpy2LOjw1C9MI","SHORT FILM · 2023","--c-rose","bully"]];
 const SOCIAL = ["1s5pcvE-eP56JnYQ33SAhEvJ3VK1mTuZr","1rAwqT1q2s7PefNqVPQlS23h2nnfKOfEb","1RwXpKdiNKNBYn1_ldtkFg0MCmzC3sAA8","1duo_TpXIDIUjiCXIirwMGN2YUpaNrZn2"];
 const SOCIAL_SRC = ["challenge", "career", "finance", "voice"];
@@ -460,6 +483,7 @@ function render() {
   document.querySelectorAll("[data-lang]").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
   document.querySelectorAll("[data-t]").forEach(el => { const v = L[el.dataset.t]; if (typeof v === "string") el.textContent = v; });
   $("#v1").innerHTML = NAV.map(([id, k, w], i) => `<button class="clip" type="button" data-go="${id}" style="--k:var(${k});--w:${w}" title="${esc(L.nav[i])}">${esc(L.nav[i])}</button>`).join("");
+  $("#adSteps").innerHTML = L.adSteps.map((s, i) => `<li><b>0${i+1}</b><span>${esc(s)}</span></li>`).join("");
   $("#steps").innerHTML = L.steps.map((s, i) => `<li><b>0${i+1}</b><span>${esc(s)}</span></li>`).join("");
   $("#filmGrid").innerHTML = FILM.map(([id, tag, k, src], i) => card(id, tag, k, L.film[i][0], L.film[i][1], L, src)).join("");
   $("#socialGrid").innerHTML = SOCIAL.map((id, i) => card(id, "CONTENT", "--c-teal", L.social[i][0], L.social[i][1], L, SOCIAL_SRC[i])).join("");
@@ -477,7 +501,7 @@ function render() {
 }
 function renderGallery() {
   const L = T[lang];
-  view = CAT.map((c, i) => i).filter(i => filter === 0 || CAT[i] === filter);
+  view = ORDER.filter(i => filter === 0 || CAT[i] === filter);
   $("#gal").innerHTML = view.map((i, j) => `<button type="button" data-open="${j}" aria-label="${esc(L.caps[i])}"><img loading="lazy" src="img/t${String(i+1).padStart(2,"0")}.jpg" alt="${esc(L.caps[i])}"><span class="n">${String(i+1).padStart(2,"0")}</span></button>`).join("");
 }
 function showLB() {
