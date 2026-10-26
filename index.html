@@ -445,6 +445,7 @@ footer{padding-block:0 40px;color:var(--muted);font-size:13px;display:flex;flex-
         <button class="watch" type="button" data-play="ad_seven" data-title="Seven Entertainment" data-t="play"></button>
       </div>
     </div>
+    <div class="grid" id="adGrid" style="margin-top:18px"></div>
   </section>
 
   <section class="bin" id="work">
@@ -578,7 +579,8 @@ const T = {
     watch: "ดูใน Drive ↗",
     nav: ["Showreel", "โฆษณา", "แอนิเมชัน", "หนังสั้น", "โซเชียล", "ล่าสุด", "กราฟิก", "เกี่ยวกับ", "ติดต่อ"],
     filters: ["ทั้งหมด", "คลินิกความงาม", "อสังหาฯ", "รับสมัครงาน", "วัสดุก่อสร้าง", "อื่น ๆ"],
-    adH: "วิดีโอโฆษณา", adP: "โฆษณาบริการถ่ายภาพมุมสูงด้วยโดรนของ Seven Entertainment สำหรับงานอีเวนต์และอสังหาริมทรัพย์",
+    adH: "วิดีโอโฆษณา", adP: "โฆษณาบริการของ Seven Entertainment ทั้งงานถ่ายภาพมุมสูงด้วยโดรน และงานพิมพ์ป้ายตั้งหน้าร้าน",
+    adCards: [["โฆษณาป้ายตั้งหน้าร้าน", "Seven Entertainment · 36 วินาที"]],
     adSteps: ["วางโครงเรื่องโฆษณาความยาว 40 วินาที", "ร้อยเรียงภาพโดรน งานอีเวนต์ และที่ดิน", "ใส่ข้อความ กราฟิก และโลโก้แบรนด์", "ตัดต่อตามจังหวะเพลงและเสียงประกอบ"],
     film: [["The Bully", "หนังสั้น · เล่าเรื่องด้วยจังหวะและอารมณ์"]],
     social: [["คอนเทนต์ทำชาเลนจ์", "ຄອນເທັ້ນທ້າທາຍ"], ["คอนเทนต์เปลี่ยนสายงาน", "ຄອນເທັ້ນປ່ຽນສາຍງານ"], ["คอนเทนต์วางแผนการเงิน", "ຄອນເທັ້ນວາງແຜນການເງີນ"], ["ฝึกพากย์เสียง", "ຝຶກພາກສຽງ"]],
@@ -611,7 +613,8 @@ const T = {
     watch: "ເບິ່ງໃນ Drive ↗",
     nav: ["Showreel", "ໂຄສະນາ", "ເອນີເມຊັ່ນ", "ໜັງສັ້ນ", "ໂຊຊຽວ", "ລ່າສຸດ", "ກຣາຟິກ", "ກ່ຽວກັບ", "ຕິດຕໍ່"],
     filters: ["ທັງໝົດ", "ຄລີນິກຄວາມງາມ", "ອະສັງຫາລິມະຊັບ", "ຮັບສະໝັກງານ", "ວັດສະດຸກໍ່ສ້າງ", "ອື່ນໆ"],
-    adH: "ວີດີໂອໂຄສະນາ", adP: "ໂຄສະນາບໍລິການຖ່າຍພາບມຸມສູງດ້ວຍໂດຣນຂອງ Seven Entertainment ສຳລັບງານອີເວັ້ນ ແລະ ອະສັງຫາລິມະຊັບ",
+    adH: "ວີດີໂອໂຄສະນາ", adP: "ໂຄສະນາບໍລິການຂອງ Seven Entertainment ທັງງານຖ່າຍພາບມຸມສູງດ້ວຍໂດຣນ ແລະ ງານພິມປ້າຍຕັ້ງໜ້າຮ້ານ",
+    adCards: [["ໂຄສະນາປ້າຍຕັ້ງໜ້າຮ້ານ", "Seven Entertainment · 36 ວິນາທີ"]],
     adSteps: ["ວາງໂຄງເລື່ອງໂຄສະນາຄວາມຍາວ 40 ວິນາທີ", "ຮຽບຮຽງພາບໂດຣນ, ງານອີເວັ້ນ ແລະ ທີ່ດິນ", "ໃສ່ຂໍ້ຄວາມ, ກຣາຟິກ ແລະ ໂລໂກ້ແບຣນ", "ຕັດຕໍ່ຕາມຈັງຫວະເພງ ແລະ ສຽງປະກອບ"],
     film: [["The Bully", "ໜັງສັ້ນ · ເລົ່າເລື່ອງດ້ວຍຈັງຫວະ ແລະ ອາລົມ"]],
     social: [["ຄອນເທັ້ນທ້າທາຍ", "Challenge content"], ["ຄອນເທັ້ນປ່ຽນສາຍງານ", "Career change"], ["ຄອນເທັ້ນວາງແຜນການເງິນ", "Financial planning"], ["ຝຶກພາກສຽງ", "Voice-over practice"]],
@@ -650,6 +653,7 @@ function render() {
   document.querySelectorAll("[data-lang]").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
   document.querySelectorAll("[data-t]").forEach(el => { const v = L[el.dataset.t]; if (typeof v === "string") el.textContent = v; });
   $("#v1").innerHTML = NAV.map(([id, k, w], i) => `<button class="clip" type="button" data-go="${id}" style="--k:var(${k});--w:${w}" title="${esc(L.nav[i])}">${esc(L.nav[i])}</button>`).join("");
+  $("#adGrid").innerHTML = ["ad_sign"].map((src, i) => card(null, "COMMERCIAL · 2026", "--c-rose", L.adCards[i][0], L.adCards[i][1], L, src)).join("");
   $("#adSteps").innerHTML = L.adSteps.map((s, i) => `<li><b>0${i+1}</b><span>${esc(s)}</span></li>`).join("");
   $("#steps").innerHTML = L.steps.map((s, i) => `<li><b>0${i+1}</b><span>${esc(s)}</span></li>`).join("");
   $("#filmGrid").innerHTML = FILM.map(([id, tag, k, src], i) => card(id, tag, k, L.film[i][0], L.film[i][1], L, src)).join("");
