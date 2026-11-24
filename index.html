@@ -453,7 +453,7 @@ footer{padding-block:0 40px;color:var(--muted);font-size:13px;display:flex;flex-
 
   <section class="bin" id="work">
     <div class="bin-head">
-      <div><div class="eyebrow" style="--k:var(--c-violet)"><span class="chip"></span>Senior project · 2025</div><h2 data-t="animH"></h2></div>
+      <div><div class="eyebrow" style="--k:var(--c-violet)"><span class="chip"></span>Animation · 2025–2026</div><h2 data-t="animH"></h2></div>
       <p data-t="animP"></p>
     </div>
     <div class="feature">
@@ -466,6 +466,7 @@ footer{padding-block:0 40px;color:var(--muted);font-size:13px;display:flex;flex-
         <button class="watch" type="button" data-play="anim" data-title="ບຸນນະມັດສະການພຣະທາດສີໂຄດຕະບອງ" data-t="play"></button>
       </div>
     </div>
+    <div class="grid" id="animGrid" style="margin-top:18px"></div>
   </section>
 
   <section class="bin" id="film">
@@ -562,8 +563,9 @@ const T = {
     ctaWork: "▶ ดูผลงาน", ctaContact: "ติดต่อร่วมงาน",
     reelCap: "Showreel รวมผลงานตัดต่อ · กดเพื่อเล่น",
     play: "▶ เล่นวิดีโอ", part: "ตอน", playSub: "ย่อขนาดไฟล์สำหรับเว็บ · ไฟล์ต้นฉบับความละเอียดสูงกว่า",
-    animH: "แอนิเมชัน โปรเจกต์จบปริญญาตรี",
-    animP: "แอนิเมชันแบบ Frame by Frame ที่ทำเองทุกขั้นตอน ตั้งแต่โครงเรื่องจนถึงแต่งเพลงประกอบ",
+    animH: "แอนิเมชัน",
+    animP: "โปรเจกต์จบปริญญาตรีแบบ Frame by Frame ที่ทำเองทุกขั้นตอน และแอนิเมชันอธิบายสินค้าสำหรับแบรนด์",
+    animCards: [["แอนิเมชัน: ชาร์จรถไฟฟ้าที่ไหน?", "ASEAN AUTO · แนวตั้ง 40 วินาที"]],
     steps: ["วางโครงเรื่องและสตอรีบอร์ด", "ออกแบบตัวละคร กำกับเสียงพากย์", "แอนิเมตแบบ Frame by Frame", "ตัดต่อ ใส่ซับไตเติล เอฟเฟกต์ และแต่งเพลงเอง"],
     watchDrive: "ดูวิดีโอใน Google Drive ↗",
     filmH: "หนังสั้น", socialH: "คอนเทนต์โซเชียลมีเดีย",
@@ -586,7 +588,7 @@ const T = {
     adCards: [["โฆษณารถยนต์ไฟฟ้า Leapmotor A10", "ASEAN AUTO · 49 วินาที"], ["โฆษณาโปรส่งท้ายปี", "ASEAN AUTO · แนวตั้ง 41 วินาที"], ["โฆษณาป้ายตั้งหน้าร้าน", "Seven Entertainment · 36 วินาที"]],
     adSteps: ["วางโครงเรื่องโฆษณาความยาว 40 วินาที", "ร้อยเรียงภาพโดรน งานอีเวนต์ และที่ดิน", "ใส่ข้อความ กราฟิก และโลโก้แบรนด์", "ตัดต่อตามจังหวะเพลงและเสียงประกอบ"],
     film: [["The Bully", "หนังสั้น · เล่าเรื่องด้วยจังหวะและอารมณ์"]],
-    social: [["คอนเทนต์ทำชาเลนจ์", "ຄອນເທັ້ນທ້າທາຍ"], ["คอนเทนต์เปลี่ยนสายงาน", "ຄອນເທັ້ນປ່ຽນສາຍງານ"], ["คอนเทนต์วางแผนการเงิน", "ຄອນເທັ້ນວາງແຜນການເງີນ"], ["ฝึกพากย์เสียง", "ຝຶກພາກສຽງ"]],
+    social: [["คอนเทนต์ตลกสั้น POV ออฟฟิศ", "แนวตั้ง · 17 วินาที"], ["คอนเทนต์เอกสารผ่อนรถ", "ASEAN AUTO · ເອກະສານຜ່ອນລົດ"], ["คอนเทนต์ทำชาเลนจ์", "ຄອນເທັ້ນທ້າທາຍ"], ["คอนเทนต์เปลี่ยนสายงาน", "ຄອນເທັ້ນປ່ຽນສາຍງານ"], ["คอนเทนต์วางแผนการเงิน", "ຄອນເທັ້ນວາງແຜນການເງີນ"], ["ฝึกพากย์เสียง", "ຝຶກພາກສຽງ"]],
     latest: "ผลงานล่าสุด",
     caps: ["โปสเตอร์โปรโมชันผ่าตัดลดขนาดหน้าผาก", "อินโฟกราฟิกจุดเด่นซิลิโคน Motiva", "โปรโมชัน PRP 6 แถม 6", "โปรโมชันยกกระชับหน้า Oligio", "โปรยิ่งจ่ายมาก ยิ่งได้แถมมาก", "โปรโมชัน Hyaron ใต้ตา", "โปสเตอร์ฟื้นฟูผิว", "โปรโมชันฟิลเลอร์ Caratfill", "ประกาศขายที่ดินและโกดัง", "โปรโมชันหน้าใส ผิวนุ่ม", "โปรโมชันโบท็อกซ์ Wondertox", "รับสมัครพนักงานรักษาความปลอดภัย", "โปรโมชันสังกะสีและลวด", "โปรโมชันสลายไขมัน Fat Caratfeel", "ประกาศโกดังให้เช่า", "โปรโมชันเสริมหน้าอก Motiva", "โปรโมชันโบท็อกซ์ Allergan", "โปรโมชันผ่าตัดดึงหน้า", "โปรโมชันนวด", "โปรโมชันทรีตเมนต์ใต้ตา", "โปรโมชันโบท็อกซ์ Neuronox", "โปรโมชันเสริมหน้าผากซิลิโคน", "โปรโมชันเสริมขมับ", "โปรโมชันโบท็อกซ์ Nabota", "ประกาศรับสมัครพนักงานโรงแรม", "ประกาศรับสมัครพนักงานโรงแรมและห้องอาหาร", "We Are Hiring รับสมัครพนักงานบัญชีและช่างเทคนิค", "โปสเตอร์ไลฟ์สดวันเกิด"]
   },
@@ -596,8 +598,9 @@ const T = {
     ctaWork: "▶ ເບິ່ງຜົນງານ", ctaContact: "ຕິດຕໍ່ຮ່ວມງານ",
     reelCap: "Showreel ລວມຜົນງານຕັດຕໍ່ · ກົດເພື່ອຫຼິ້ນ",
     play: "▶ ຫຼິ້ນວີດີໂອ", part: "ຕອນ", playSub: "ຫຍໍ້ຂະໜາດໄຟລ໌ສຳລັບເວັບ · ໄຟລ໌ຕົ້ນສະບັບຄວາມລະອຽດສູງກວ່າ",
-    animH: "ເອນີເມຊັ່ນ ບົດໂຄງການຈົບປະລິນຍາຕີ",
-    animP: "ເອນີເມຊັ່ນແບບ Frame by Frame ທີ່ເຮັດເອງທຸກຂັ້ນຕອນ ຕັ້ງແຕ່ໂຄງເລື່ອງຈົນຮອດແຕ່ງເພງປະກອບ",
+    animH: "ເອນີເມຊັ່ນ",
+    animP: "ບົດໂຄງການຈົບປະລິນຍາຕີແບບ Frame by Frame ທີ່ເຮັດເອງທຸກຂັ້ນຕອນ ແລະ ເອນີເມຊັ່ນອະທິບາຍສິນຄ້າສຳລັບແບຣນ",
+    animCards: [["ເອນີເມຊັ່ນ: ສາກລົດໄຟຟ້າຢູ່ໃສ?", "ASEAN AUTO · ແນວຕັ້ງ 40 ວິນາທີ"]],
     steps: ["ວາງໂຄງເລື່ອງ ແລະ Storyboard", "ອອກແບບຕົວລະຄອນ, ກຳກັບສຽງພາກ", "ເອນີເມດແບບ Frame by Frame", "ຕັດຕໍ່, ໃສ່ Subtitle, Effects ແລະ ແຕ່ງເພງເອງ"],
     watchDrive: "ເບິ່ງວີດີໂອໃນ Google Drive ↗",
     filmH: "ໜັງສັ້ນ", socialH: "ຄອນເທັ້ນໂຊຊຽວມີເດຍ",
@@ -620,7 +623,7 @@ const T = {
     adCards: [["ໂຄສະນາລົດໄຟຟ້າ Leapmotor A10", "ASEAN AUTO · 49 ວິນາທີ"], ["ໂຄສະນາໂປຣສົ່ງທ້າຍປີ", "ASEAN AUTO · ແນວຕັ້ງ 41 ວິນາທີ"], ["ໂຄສະນາປ້າຍຕັ້ງໜ້າຮ້ານ", "Seven Entertainment · 36 ວິນາທີ"]],
     adSteps: ["ວາງໂຄງເລື່ອງໂຄສະນາຄວາມຍາວ 40 ວິນາທີ", "ຮຽບຮຽງພາບໂດຣນ, ງານອີເວັ້ນ ແລະ ທີ່ດິນ", "ໃສ່ຂໍ້ຄວາມ, ກຣາຟິກ ແລະ ໂລໂກ້ແບຣນ", "ຕັດຕໍ່ຕາມຈັງຫວະເພງ ແລະ ສຽງປະກອບ"],
     film: [["The Bully", "ໜັງສັ້ນ · ເລົ່າເລື່ອງດ້ວຍຈັງຫວະ ແລະ ອາລົມ"]],
-    social: [["ຄອນເທັ້ນທ້າທາຍ", "Challenge content"], ["ຄອນເທັ້ນປ່ຽນສາຍງານ", "Career change"], ["ຄອນເທັ້ນວາງແຜນການເງິນ", "Financial planning"], ["ຝຶກພາກສຽງ", "Voice-over practice"]],
+    social: [["ຄອນເທັ້ນຕະຫຼົກສັ້ນ POV ອອຟຟິດ", "ແນວຕັ້ງ · 17 ວິນາທີ"], ["ຄອນເທັ້ນເອກະສານຜ່ອນລົດ", "ASEAN AUTO · ເອກະສານຜ່ອນລົດ"], ["ຄອນເທັ້ນທ້າທາຍ", "Challenge content"], ["ຄອນເທັ້ນປ່ຽນສາຍງານ", "Career change"], ["ຄອນເທັ້ນວາງແຜນການເງິນ", "Financial planning"], ["ຝຶກພາກສຽງ", "Voice-over practice"]],
     latest: "ຜົນງານລ່າສຸດ",
     caps: ["ໂປສເຕີໂປຣໂມຊັ່ນຜ່າຕັດຫຼຸດຂະໜາດໜ້າຜາກ", "ອິນໂຟກຣາຟິກຈຸດເດັ່ນຊິລິໂຄນ Motiva", "ໂປຣໂມຊັ່ນ PRP 6 ແຖມ 6", "ໂປຣໂມຊັ່ນຍົກກະຊັບໜ້າ Oligio", "ໂປຣຍິ່ງຈ່າຍຫຼາຍ ຍິ່ງໄດ້ແຖມຫຼາຍ", "ໂປຣໂມຊັ່ນ Hyaron ໃຕ້ຕາ", "ໂປສເຕີຟື້ນຟູຜິວ", "ໂປຣໂມຊັ່ນຟິວເລີ Caratfill", "ປະກາດຂາຍດິນ ແລະ ສາງ", "ໂປຣໂມຊັ່ນໜ້າໃສ ຜິວນຸ້ມ", "ໂປຣໂມຊັ່ນໂບທັອກ Wondertox", "ຮັບສະໝັກພະນັກງານຮັກສາຄວາມປອດໄພ", "ໂປຣໂມຊັ່ນສັງກະສີ ແລະ ລວດ", "ໂປຣໂມຊັ່ນສະຫຼາຍໄຂມັນ Fat Caratfeel", "ປະກາດສາງໃຫ້ເຊົ່າ", "ໂປຣໂມຊັ່ນເສີມໜ້າເອິກ Motiva", "ໂປຣໂມຊັ່ນໂບທັອກ Allergan", "ໂປຣໂມຊັ່ນຜ່າຕັດດຶງໜ້າ", "ໂປຣໂມຊັ່ນນວດ", "ໂປຣໂມຊັ່ນທຣີດເມັ້ນໃຕ້ຕາ", "ໂປຣໂມຊັ່ນໂບທັອກ Neuronox", "ໂປຣໂມຊັ່ນເສີມໜ້າຜາກຊິລິໂຄນ", "ໂປຣໂມຊັ່ນເສີມຂະໝັບ", "ໂປຣໂມຊັ່ນໂບທັອກ Nabota", "ປະກາດຮັບສະໝັກພະນັກງານໂຮງແຮມ", "ປະກາດຮັບສະໝັກພະນັກງານໂຮງແຮມ ແລະ ຫ້ອງອາຫານ", "We Are Hiring ຮັບສະໝັກພະນັກງານບັນຊີ ແລະ ຊ່າງເຕັກນິກ", "ໂປສເຕີໄລຟ໌ສົດວັນເກີດ"]
   }
@@ -632,10 +635,10 @@ const ORDER = [...Array(13).keys()].map(k => k + 15).concat([...Array(15).keys()
 const CLIENT = {1: "Beyond 693 Medical Center", 2: null, 3: null, 4: null};
 const NAV = [["top","--c-amber",2],["ad","--c-rose",2],["work","--c-violet",3],["film","--c-rose",2],["social","--c-teal",3],["latest","--c-sky",3],["graphic","--c-amber",3],["about","--c-violet",2],["contact","--c-rose",1.5]];
 const FILM = [["1f8fZ8r-wK8PZD-qezXojpy2LOjw1C9MI","SHORT FILM · 2023","--c-rose","bully"]];
-const SOCIAL = ["1s5pcvE-eP56JnYQ33SAhEvJ3VK1mTuZr","1rAwqT1q2s7PefNqVPQlS23h2nnfKOfEb","1RwXpKdiNKNBYn1_ldtkFg0MCmzC3sAA8","1duo_TpXIDIUjiCXIirwMGN2YUpaNrZn2"];
-const SOCIAL_SRC = ["challenge", "career", "finance", "voice"];
+const SOCIAL = [null, null, "1s5pcvE-eP56JnYQ33SAhEvJ3VK1mTuZr","1rAwqT1q2s7PefNqVPQlS23h2nnfKOfEb","1RwXpKdiNKNBYn1_ldtkFg0MCmzC3sAA8","1duo_TpXIDIUjiCXIirwMGN2YUpaNrZn2"];
+const SOCIAL_SRC = ["pov_office", "car_loan", "challenge", "career", "finance", "voice"];
 const PARTS = {};
-const LATEST = [[null,"ASEAN AUTO · ເອກະສານຜ່ອນລົດ","car_loan"],[null,"Beyond 693 · Filler VS Botox","v1016"],[null,"Beyond 693 · Motiva","fn4k"],["1HBK49lv2F30QEF2g_xKmnf50paOMcBqS","hamony.mp4","hamony"],["1Q37m8ejNtGUZNIcGG8BfysdFA9mH604x","fn2k tt.mp4","fn2k"],["1hEHUI0IrkyzFO2e2HZXb9c6WzGdu70iQ","0911 (1)(3).mp4","new0911"],["1kYMCYBFlowHEucUEtJoAdMc2GMzAZEQt","0910(1).mp4","v0910"],["1ZwYLBRA6k2GM_zWBzYVhX9yYKzVNdx3T","0929 (1)(1).mp4","v0929"]];
+const LATEST = [[null,"Beyond 693 · Filler VS Botox","v1016"],[null,"Beyond 693 · Motiva","fn4k"],["1HBK49lv2F30QEF2g_xKmnf50paOMcBqS","hamony.mp4","hamony"],["1Q37m8ejNtGUZNIcGG8BfysdFA9mH604x","fn2k tt.mp4","fn2k"],["1hEHUI0IrkyzFO2e2HZXb9c6WzGdu70iQ","0911 (1)(3).mp4","new0911"],["1kYMCYBFlowHEucUEtJoAdMc2GMzAZEQt","0910(1).mp4","v0910"],["1ZwYLBRA6k2GM_zWBzYVhX9yYKzVNdx3T","0929 (1)(1).mp4","v0929"]];
 
 let lang = "th", filter = 0, view = [], idx = 0;
 try { const s = localStorage.getItem("py-lang"); if (s === "lo" || s === "th") lang = s; } catch (e) {}
@@ -658,6 +661,7 @@ function render() {
   $("#v1").innerHTML = NAV.map(([id, k, w], i) => `<button class="clip" type="button" data-go="${id}" style="--k:var(${k});--w:${w}" title="${esc(L.nav[i])}">${esc(L.nav[i])}</button>`).join("");
   $("#adGrid").innerHTML = ["ad_leap", "ad_yearend", "ad_sign"].map((src, i) => card(null, "COMMERCIAL · 2026", "--c-rose", L.adCards[i][0], L.adCards[i][1], L, src)).join("");
   $("#adSteps").innerHTML = L.adSteps.map((s, i) => `<li><b>0${i+1}</b><span>${esc(s)}</span></li>`).join("");
+  $("#animGrid").innerHTML = ["anim_charge"].map((src, i) => card(null, "MOTION · 2026", "--c-violet", L.animCards[i][0], L.animCards[i][1], L, src)).join("");
   $("#steps").innerHTML = L.steps.map((s, i) => `<li><b>0${i+1}</b><span>${esc(s)}</span></li>`).join("");
   $("#filmGrid").innerHTML = FILM.map(([id, tag, k, src], i) => card(id, tag, k, L.film[i][0], L.film[i][1], L, src)).join("");
   $("#socialGrid").innerHTML = SOCIAL.map((id, i) => card(id, "CONTENT", "--c-teal", L.social[i][0], L.social[i][1], L, SOCIAL_SRC[i])).join("");
